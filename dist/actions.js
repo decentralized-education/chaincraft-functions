@@ -44,8 +44,8 @@ async function sendErc20(action, context) {
     }
     console.log("action.value ", action.value);
     const data = [
-        action.fromAddress,
-        action.toAddress,
+        action.fromAddress, // sender
+        action.toAddress, // recipient
         ethers_1.ethers.utils.parseUnits(action.value, "ether").toBigInt().toString(), // amount
     ];
     console.log("data ", data);
