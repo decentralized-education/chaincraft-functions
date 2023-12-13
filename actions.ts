@@ -45,7 +45,7 @@ export async function sendErc20(
 
   const provider = multiChainProvider.default();
 
-  console.log("sendErc20 ",action.tokenAddress,action.fromAddress,action.toAddress)
+  console.log("sendErc20 ",action.tokenAddress,action.fromAddress,action.toAddress,action)
   const erc20Contract = new Contract(action.tokenAddress!, ERC20, provider);
 
   // const code = await provider.getCode(action.address) 
@@ -58,6 +58,7 @@ export async function sendErc20(
   }
 
 
+  console.log("action.value ",action.value)
   const data = [
     action.fromAddress, // sender
     action.toAddress, // recipient
