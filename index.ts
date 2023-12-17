@@ -25,7 +25,10 @@ export const main = async (context: Web3FunctionContext): Promise<Web3FunctionRe
         message: `Filters not met`,
       };
     }
-    const actionData = await prepareAction(task.action, context);
+    
+    const actionData = await prepareAction(task.action, context, {
+      sender: task.sender!
+    });
     console.log("actionData ", actionData);
     if (!actionData) {
       return {

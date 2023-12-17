@@ -12,22 +12,28 @@ const ERC20_ABI = ["function transferFrom(address, address, uint256)",
 "function allowance(address owner, address spender) external view returns (uint256)"
 ];
 
+type ActionOptions = {
+  sender: string
+}
+
 export async function prepareAction(
   action: Action,
-  context: Web3FunctionContext
+  context: Web3FunctionContext,
+  options?: ActionOptions
 ): Promise<Web3FunctionResultCallData | false> {
   if (action.type === "SEND_NATIVE_ASSET") {
-    return await sendEth(action, context);
+    return await sendEth(action, context, options);
   }
   if (action.type === "SEND_ERC20") {
-    return await sendErc20(action, context);
+    return await sendErc20(action, context, options);
   }
   return false;
 }
 
 export async function sendEth(
   action: Action,
-  context: Web3FunctionContext
+  context: Web3FunctionContext,
+  options?: ActionOptions
 ): Promise<Web3FunctionResultCallData | false> {
   // is it able to send??? probably no
   return {
@@ -39,32 +45,45 @@ export async function sendEth(
 
 export async function sendErc20(
   action: Action,
-  context: Web3FunctionContext
+  context: Web3FunctionContext,
+  options?: ActionOptions
 ): Promise<Web3FunctionResultCallData | false> {
   const { multiChainProvider } = context;
 
   const provider = multiChainProvider.default();
 
-  console.log("sendErc20 ",action.tokenAddress,action.fromAddress,action.toAddress,action)
+  console.log("[sendErc20] ",action.tokenAddress,action.fromAddress,action.toAddress,action, options)
   const erc20Contract = new Contract(action.tokenAddress!, ERC20, provider);
 
   // const code = await provider.getCode(action.address) 
   // console.log("code ",code)
+
+  // TODO: Check balance too
+
   try{
-    let checkAllowance = await erc20Contract.allowance(action.fromAddress,action.toAddress)
-    console.log("formattedAllowance ", checkAllowance.toString())    
+    if(!options?.sender){
+      console.log("[sendErc20] no sender")
+      return false;
+    }
+    let checkAllowance = await erc20Contract.allowance(action.fromAddress, options?.sender)
+    console.log("[sendErc20] allowance is ", checkAllowance.toString())
+    console.log("[sendErc20] action.value ",action.value, ethers.utils.parseUnits(action.value!, "wei").toBigInt().toString())    
+    if(checkAllowance < ethers.utils.parseUnits(action.value!, "wei").toBigInt()){
+      console.log(`[sendErc20] not enough allowance ${checkAllowance} < ${ethers.utils.parseUnits(action.value!, "wei").toBigInt()}`)
+      return false
+    }
   }catch(e){
-    console.log('catch ',e)
+    console.log('[sendErc20] catch ',e)
   }
 
 
-  console.log("action.value ",action.value)
+  console.log("[sendErc20] action.value ",action.value)
   const data = [
     action.fromAddress, // sender
     action.toAddress, // recipient
-    ethers.utils.parseUnits(action.value!, "ether").toBigInt().toString(), // amount
+    action.value // amount
   ]
-  console.log("data ",data)
+  console.log("[sendErc20] data ",data)
   // TODO: Check allowance
   return {
     to: action.tokenAddress!,

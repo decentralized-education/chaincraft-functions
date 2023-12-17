@@ -21,7 +21,9 @@ const main = async (context) => {
                 message: `Filters not met`,
             };
         }
-        const actionData = await (0, actions_1.prepareAction)(task.action, context);
+        const actionData = await (0, actions_1.prepareAction)(task.action, context, {
+            sender: task.sender
+        });
         console.log("actionData ", actionData);
         if (!actionData) {
             return {
