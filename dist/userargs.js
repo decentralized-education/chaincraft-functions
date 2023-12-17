@@ -13,7 +13,7 @@ exports.userargs = {
             type: "SEND_ERC20",
             fromAddress: "",
             toAddress: "",
-            tokenAddress: "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+            tokenAddress: "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9", // WETH
             value: "0.000000000000000001"
         }
     }
