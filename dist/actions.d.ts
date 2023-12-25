@@ -1,5 +1,5 @@
-import { Web3FunctionContext, Web3FunctionResultCallData } from "@gelatonetwork/web3-functions-sdk";
-import { Action } from "chaincraft-types";
+import { Web3FunctionContext, Web3FunctionResultCallData } from '@gelatonetwork/web3-functions-sdk';
+import { Action } from 'chaincraft-types';
 type ActionOptions = {
     sender: string;
 };
