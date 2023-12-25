@@ -31,7 +31,7 @@ exports.sendEth = sendEth;
 async function sendErc20(action, context, options) {
     const { multiChainProvider } = context;
     const provider = multiChainProvider.default();
-    console.log("[sendErc20] ", action.tokenAddress, action.fromAddress, action.toAddress, action, options);
+    console.log("[sendErc20] ", "token=", action.tokenAddress, "fromAddress=", action.fromAddress, "toAddress=", action.toAddress, "options=", options);
     const erc20Contract = new ethers_1.Contract(action.tokenAddress, ERC20_1.default, provider);
     // const code = await provider.getCode(action.address) 
     // console.log("code ",code)
@@ -59,8 +59,8 @@ async function sendErc20(action, context, options) {
     }
     console.log("[sendErc20] action.value ", action.value);
     const data = [
-        action.fromAddress, // sender
-        action.toAddress, // recipient
+        action.fromAddress,
+        action.toAddress,
         action.value // amount
     ];
     console.log("[sendErc20] data ", data);
