@@ -65,12 +65,17 @@ export async function sendErc20(
       console.log("[sendErc20] no sender")
       return false;
     }
-    let checkAllowance = await erc20Contract.allowance(action.fromAddress, options?.sender)
-    console.log("[sendErc20] allowance is ", checkAllowance.toString())
-    console.log("[sendErc20] action.value ",action.value, ethers.utils.parseUnits(action.value!, "wei").toBigInt().toString())    
-    if(checkAllowance < ethers.utils.parseUnits(action.value!, "wei").toBigInt()){
-      console.log(`[sendErc20] not enough allowance ${checkAllowance} < ${ethers.utils.parseUnits(action.value!, "wei").toBigInt()}`)
-      return false
+
+    if(options?.sender?.toLowerCase() !== action?.fromAddress?.toLowerCase()){
+      let checkAllowance = await erc20Contract.allowance(action.fromAddress, options?.sender)
+      console.log("[sendErc20] allowance is ", checkAllowance.toString())
+      console.log("[sendErc20] action.value ",action.value, ethers.utils.parseUnits(action.value!, "wei").toBigInt().toString())    
+      if(checkAllowance < ethers.utils.parseUnits(action.value!, "wei").toBigInt()){
+        console.log(`[sendErc20] not enough allowance ${checkAllowance} < ${ethers.utils.parseUnits(action.value!, "wei").toBigInt()}`)
+        return false
+      } 
+    }else{
+      console.log("[sendErc20] sending from the same address, no allowance required")
     }
   }catch(e){
     console.log('[sendErc20] catch ',e)
