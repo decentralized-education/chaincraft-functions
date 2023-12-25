@@ -59,8 +59,8 @@ async function sendErc20(action, context, options) {
     }
     console.log("[sendErc20] action.value ", action.value);
     const data = [
-        action.fromAddress,
-        action.toAddress,
+        action.fromAddress, // sender
+        action.toAddress, // recipient
         action.value // amount
     ];
     console.log("[sendErc20] data ", data);
