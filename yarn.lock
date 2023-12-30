@@ -824,8 +824,8 @@ call-bind@^1.0.0:
     set-function-length "^1.1.1"
 
 chaincraft-types@decentralized-education/chaincraft-types:
-  version "1.0.15"
-  resolved "https://codeload.github.com/decentralized-education/chaincraft-types/tar.gz/4c7d2db13d3533e1e949c16764f61be8befcda38"
+  version "1.0.18"
+  resolved "https://codeload.github.com/decentralized-education/chaincraft-types/tar.gz/4a2727d88495d2f6ee548b3b4c0d477c1bd3c547"
   dependencies:
     typescript "^5.3.3"
 

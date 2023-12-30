@@ -9,7 +9,8 @@
   ],
   "scripts": {
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "update": "yarn add decentralized-education/chaincraft-types"
   },
   "repository": {
     "type": "git",
