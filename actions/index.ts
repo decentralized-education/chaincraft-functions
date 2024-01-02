@@ -6,7 +6,7 @@ import {
 import { Action, Filter } from 'chaincraft-types'
 import { Contract, ethers } from 'ethers'
 
-import ERC20 from './abi/ERC20'
+import ERC20 from '../abi/ERC20'
 const ERC20_ABI = [
     'function transferFrom(address, address, uint256)',
 

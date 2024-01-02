@@ -7,6 +7,6 @@
         "strict": true,
         "esModuleInterop": true
     },
-    "include": ["*.ts"],
+    "include": ["*.ts", "actions/index.ts", "filters/index.ts"],
     "exclude": ["node_modules"]
 }
