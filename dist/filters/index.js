@@ -30,7 +30,7 @@ async function checkFilterGroup(filters, context) {
 }
 exports.checkFilterGroup = checkFilterGroup;
 async function checkFilter(filter, context) {
-    console.log('[checkFilter] ', filter);
+    console.log('[checkFilter] ', filter.id, filter);
     if (filter.id === 'GASPRICE') {
         return await (0, gasprice_1.gasPriceFilter)(filter, context);
     }
@@ -43,6 +43,7 @@ async function checkFilter(filter, context) {
     if (filter.id === 'NEWSAPI') {
         return await (0, newsapi_1.newsApiFilter)(filter, context);
     }
+    console.log('[checkFilter] unknown filter id ', filter.id);
     return false;
 }
 exports.checkFilter = checkFilter;
