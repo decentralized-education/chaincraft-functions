@@ -5,6 +5,7 @@ const blocknumber_1 = require("./blocknumber");
 const gasprice_1 = require("./gasprice");
 const timestamp_1 = require("./timestamp");
 const newsapi_1 = require("./newsapi");
+const coingecko_1 = require("./coingecko");
 async function checkFilters(filtersGroups, context) {
     console.log('[checkFilters] filtersGroups ', filtersGroups);
     for (const filterGroup of filtersGroups) {
@@ -42,6 +43,9 @@ async function checkFilter(filter, context) {
     }
     if (filter.id === 'NEWSAPI' || filter.type === 'NEWSAPI') {
         return await (0, newsapi_1.newsApiFilter)(filter, context);
+    }
+    if (filter.id === 'coingecko-price') {
+        return await (0, coingecko_1.coingeckoPriceFilter)(filter, context);
     }
     console.log('[checkFilter] unknown filter id ', filter.id);
     return false;

@@ -4,7 +4,7 @@ import { blockNumberFilter } from './blocknumber'
 import { gasPriceFilter } from './gasprice'
 import { timestampFilter } from './timestamp'
 import { newsApiFilter } from './newsapi'
-
+import { coingeckoPriceFilter } from './coingecko'
 export async function checkFilters(
     filtersGroups: Filter[][],
     context: Web3FunctionContext
@@ -40,7 +40,7 @@ export async function checkFilter(
     context: Web3FunctionContext
 ): Promise<boolean> {
     console.log('[checkFilter] ', filter.id, filter)
-    if (filter.id === 'GASPRICE' || filter.type === 'GASPRICE' ) {
+    if (filter.id === 'GASPRICE' || filter.type === 'GASPRICE') {
         return await gasPriceFilter(filter, context)
     }
     if (filter.id === 'BLOCKNUMBER' || filter.type === 'BLOCKNUMBER') {
@@ -51,6 +51,9 @@ export async function checkFilter(
     }
     if (filter.id === 'NEWSAPI' || filter.type === 'NEWSAPI') {
         return await newsApiFilter(filter, context)
+    }
+    if (filter.id === 'coingecko-price') {
+        return await coingeckoPriceFilter(filter, context)
     }
     console.log('[checkFilter] unknown filter id ', filter.id)
     return false
