@@ -1,8 +1,6 @@
-import {
-    Web3FunctionContext
-} from '@gelatonetwork/web3-functions-sdk'
+import { Web3FunctionContext } from '@gelatonetwork/web3-functions-sdk'
 import { Filter } from 'chaincraft-types'
-import ky from 'ky'
+import axios from 'axios'
 import moment from 'moment'
 
 export const newsApiFilter = async (
@@ -10,14 +8,18 @@ export const newsApiFilter = async (
     context: Web3FunctionContext
 ) => {
     try {
-        console.log("[filters] newsApiFilter ",filter)
+        console.log('[filters] newsApiFilter ', filter)
 
-        const query = filter.value;
-        const date = moment().format('YYYY-MM-DD');
-        const apiKey = context.secrets.get("news-api-key");
-        console.log("[filters] newsApiFilter apiKey ",apiKey)
-        const response = await ky.get(`https://newsapi.org/v2/everything?q=${query}&from=${date}&sortBy=popularity&apiKey=${apiKey}`).json();
-        console.log("[filters] newsApiFilter response ",response)
+        const query = filter.value
+        const date = moment().add(-1, 'days').format('YYYY-MM-DD')
+        const apiKey = await context.secrets.get('news-api-key')
+        console.log("[filters] newsApiFilter query ",query)
+        const url = `https://newsapi.org/v2/everything?q=${query}&from=${date}&sortBy=popularity&apiKey=${apiKey}`;
+        const { data } = await axios.get(url)
+        console.log('[filters] newsApiFilter response ', data)
+        if (data.status == 'ok' && data.totalResults > 0) {
+            return true
+        }
     } catch (e) {
         console.log('[filters] newsApiFilter error ', e)
     }

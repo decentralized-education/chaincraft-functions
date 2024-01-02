@@ -31,16 +31,16 @@ async function checkFilterGroup(filters, context) {
 exports.checkFilterGroup = checkFilterGroup;
 async function checkFilter(filter, context) {
     console.log('[checkFilter] ', filter.id, filter);
-    if (filter.id === 'GASPRICE') {
+    if (filter.id === 'GASPRICE' || filter.type === 'GASPRICE') {
         return await (0, gasprice_1.gasPriceFilter)(filter, context);
     }
-    if (filter.id === 'BLOCKNUMBER') {
+    if (filter.id === 'BLOCKNUMBER' || filter.type === 'BLOCKNUMBER') {
         return await (0, blocknumber_1.blockNumberFilter)(filter, context);
     }
-    if (filter.id === 'TIMESTAMP') {
+    if (filter.id === 'TIMESTAMP' || filter.type === 'TIMESTAMP') {
         return await (0, timestamp_1.timestampFilter)(filter, context);
     }
-    if (filter.id === 'NEWSAPI') {
+    if (filter.id === 'NEWSAPI' || filter.type === 'NEWSAPI') {
         return await (0, newsapi_1.newsApiFilter)(filter, context);
     }
     console.log('[checkFilter] unknown filter id ', filter.id);

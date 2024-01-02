@@ -40,16 +40,16 @@ export async function checkFilter(
     context: Web3FunctionContext
 ): Promise<boolean> {
     console.log('[checkFilter] ', filter.id, filter)
-    if (filter.id === 'GASPRICE') {
+    if (filter.id === 'GASPRICE' || filter.type === 'GASPRICE' ) {
         return await gasPriceFilter(filter, context)
     }
-    if (filter.id === 'BLOCKNUMBER') {
+    if (filter.id === 'BLOCKNUMBER' || filter.type === 'BLOCKNUMBER') {
         return await blockNumberFilter(filter, context)
     }
-    if (filter.id === 'TIMESTAMP') {
+    if (filter.id === 'TIMESTAMP' || filter.type === 'TIMESTAMP') {
         return await timestampFilter(filter, context)
     }
-    if (filter.id === 'NEWSAPI') {
+    if (filter.id === 'NEWSAPI' || filter.type === 'NEWSAPI') {
         return await newsApiFilter(filter, context)
     }
     console.log('[checkFilter] unknown filter id ', filter.id)
