@@ -39,7 +39,7 @@ export async function checkFilter(
     filter: Filter,
     context: Web3FunctionContext
 ): Promise<boolean> {
-    console.log('[checkFilter] ', filter)
+    console.log('[checkFilter] ', filter.id, filter)
     if (filter.id === 'GASPRICE') {
         return await gasPriceFilter(filter, context)
     }
@@ -52,6 +52,6 @@ export async function checkFilter(
     if (filter.id === 'NEWSAPI') {
         return await newsApiFilter(filter, context)
     }
-
+    console.log('[checkFilter] unknown filter id ', filter.id)
     return false
 }
