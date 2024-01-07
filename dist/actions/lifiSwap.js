@@ -19,7 +19,8 @@ async function lifiSwap(action, context, options) {
             fromAmount: action.value,
             fromAddress: action.fromAddress,
             order: "CHEAPEST",
-            slippage: "0.005",
+            // slippage: "0.005",
+            slippage: "0.05",
             integrator: "chaincraft.app",
             fee: 0,
             allowDestinationCall: false
