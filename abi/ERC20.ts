@@ -1,3 +1,7 @@
+export const ERC20_ABI = [
+  'function transferFrom(address, address, uint256)',
+  'function allowance(address owner, address spender) external view returns (uint256)',
+]
 export default [
   {
     "inputs": [

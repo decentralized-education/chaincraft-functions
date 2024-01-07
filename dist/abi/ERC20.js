@@ -1,5 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ERC20_ABI = void 0;
+exports.ERC20_ABI = [
+    'function transferFrom(address, address, uint256)',
+    'function allowance(address owner, address spender) external view returns (uint256)',
+];
 exports.default = [
     {
         "inputs": [

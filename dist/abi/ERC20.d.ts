@@ -1,3 +1,4 @@
+export declare const ERC20_ABI: string[];
 declare const _default: ({
     inputs: {
         internalType: string;
