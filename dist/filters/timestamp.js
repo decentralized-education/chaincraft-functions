@@ -11,10 +11,10 @@ const timestampFilter = async (filter, context) => {
         const provider = context.multiChainProvider.default();
         const timestamp = (0, moment_1.default)().unix();
         console.log('[getTimestampFilter] timestamp=', timestamp);
-        if (filter.condition === 'GREATER') {
+        if (filter.condition === 'TIMEAFTER') {
             return timestamp > +filter.value;
         }
-        if (filter.condition === 'LESS') {
+        if (filter.condition === 'TIMEBEFORE') {
             return timestamp < +filter.value;
         }
         if (filter.condition === 'EQUAL') {

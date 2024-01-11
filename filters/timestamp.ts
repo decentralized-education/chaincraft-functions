@@ -16,10 +16,10 @@ export const timestampFilter = async (
         const timestamp = moment().unix()
         console.log('[getTimestampFilter] timestamp=', timestamp)
 
-        if (filter.condition === 'GREATER') {
+        if (filter.condition === 'TIMEAFTER') {
             return timestamp > +filter.value!
         }
-        if (filter.condition === 'LESS') {
+        if (filter.condition === 'TIMEBEFORE') {
             return timestamp < +filter.value!
         }
         if (filter.condition === 'EQUAL') {
