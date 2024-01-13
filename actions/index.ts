@@ -8,7 +8,8 @@ import { binanceTrade } from './binance/binanceTrade'
 import { lifiSwap } from './lifiSwap'
 import { sendErc20 } from './sendErc20'
 import { sendEth } from './sendEth'
-import {binanceWithdraw} from './binance/binanceWithdraw'
+import { binanceWithdraw } from './binance/binanceWithdraw'
+import { sendEmail } from './notifications/sendEmail'
 
 export async function prepareAction(
     action: Action,
@@ -32,6 +33,9 @@ export async function prepareAction(
     }
     if (action.id === 'binance-withdraw') {
         return await binanceWithdraw(action, context, options)
+    }
+    if (action.id === 'send-email') {
+        return await sendEmail(action, context, options)
     }
 
     console.log('[prepareAction] unknown action type')
