@@ -7,7 +7,7 @@ exports.binanceTrade = void 0;
 const binance_1 = require("binance");
 const lodash_1 = __importDefault(require("lodash"));
 async function binanceTrade(action, context, options) {
-    console.log("[binanceSwap] ", action);
+    console.log("[binanceTrade] ", action);
     try {
         const binanceKey = await context.secrets.get('binance-api-key');
         const binanceSecret = await context.secrets.get('binance-api-secret');
@@ -30,6 +30,10 @@ async function binanceTrade(action, context, options) {
             console.error("[binanceTrade] no symbol set up");
             return false;
         }
+        if (!action.value) {
+            console.error("[binanceTrade] no amount set up");
+            return false;
+        }
         const binanceClient = new binance_1.MainClient({
             api_key: binanceKey,
             api_secret: binanceSecret,
@@ -37,7 +41,8 @@ async function binanceTrade(action, context, options) {
         const response = await binanceClient.submitNewOrder({
             symbol,
             side: side,
-            type: "MARKET"
+            type: "MARKET",
+            quantity: +action.value
         });
         console.log("[binanceTrade] successful trade ", response);
         if (response.orderId) {
@@ -45,7 +50,7 @@ async function binanceTrade(action, context, options) {
         }
     }
     catch (e) {
-        console.log("[binanceTrade] error ", e);
+        console.error("[binanceTrade] error ", e);
     }
     return false;
 }

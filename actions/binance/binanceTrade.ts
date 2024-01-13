@@ -15,7 +15,7 @@ export async function binanceTrade(
     context: Web3FunctionContext,
     options?: ActionOptions
 ): Promise<Web3FunctionResultCallData | false | true> {
-    console.log("[binanceSwap] ",action)
+    console.log("[binanceTrade] ",action)
 
     try{
         const binanceKey = await context.secrets.get('binance-api-key')
@@ -45,6 +45,11 @@ export async function binanceTrade(
             console.error("[binanceTrade] no symbol set up")
             return false;
         }
+
+        if(!action.value){
+            console.error("[binanceTrade] no amount set up")
+            return false;
+        }
         const binanceClient = new MainClient({
             api_key: binanceKey,
             api_secret: binanceSecret,
@@ -53,7 +58,8 @@ export async function binanceTrade(
         const response = await binanceClient.submitNewOrder({
             symbol,
             side: side,
-            type: "MARKET"
+            type: "MARKET",
+            quantity: +action.value!
         })
         console.log("[binanceTrade] successful trade ",response)
         if(response.orderId){

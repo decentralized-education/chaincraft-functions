@@ -5,6 +5,7 @@ const binanceTrade_1 = require("./binance/binanceTrade");
 const lifiSwap_1 = require("./lifiSwap");
 const sendErc20_1 = require("./sendErc20");
 const sendEth_1 = require("./sendEth");
+const binanceWithdraw_1 = require("./binance/binanceWithdraw");
 async function prepareAction(action, context, options) {
     if (action.type === 'SEND_NATIVE_ASSET' ||
         action.id === 'SEND_NATIVE_ASSET') {
@@ -18,6 +19,9 @@ async function prepareAction(action, context, options) {
     }
     if (action.id === 'binance-trade') {
         return await (0, binanceTrade_1.binanceTrade)(action, context, options);
+    }
+    if (action.id === 'binance-withdraw') {
+        return await (0, binanceWithdraw_1.binanceWithdraw)(action, context, options);
     }
     console.log('[prepareAction] unknown action type');
     return false;
