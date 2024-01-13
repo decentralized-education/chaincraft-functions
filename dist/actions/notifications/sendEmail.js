@@ -31,12 +31,13 @@ async function sendEmail(action, context, options) {
             key: apiKey,
         });
         const text = lodash_1.default.get(action, 'data.text', `Spell is casted at ${(0, moment_1.default)().format('YYYY-MM-DD HH:mm:ss')}`);
+        const subject = lodash_1.default.get(action, 'data.subject', 'Chaincraft Spell is casted');
         console.log('[sendEmail] sending email to ', toEmail, text);
         await mg.messages
             .create(domain, {
             from: `Chaincraft <noreply@${domain}>`,
             to: [toEmail],
-            subject: 'Chaincraft Spell is casted',
+            subject,
             text
         });
         return true;
