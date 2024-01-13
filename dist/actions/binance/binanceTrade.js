@@ -45,7 +45,7 @@ async function binanceTrade(action, context, options) {
         }
     }
     catch (e) {
-        console.log("[binanceTrade] error ", e);
+        console.error("[binanceTrade] error ", e);
     }
     return false;
 }
