@@ -55,6 +55,7 @@ export async function binanceTrade(
             side: side,
             type: "MARKET"
         })
+        console.log("[binanceTrade] successful trade ",response)
         if(response.orderId){
             return true;
         }
