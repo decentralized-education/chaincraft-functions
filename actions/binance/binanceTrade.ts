@@ -60,7 +60,7 @@ export async function binanceTrade(
             return true;
         }
     }catch(e:any){
-        console.log("[binanceTrade] error ",e)
+        console.error("[binanceTrade] error ",e)
     }
     return false
 }
