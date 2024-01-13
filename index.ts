@@ -5,8 +5,8 @@ import {
   Web3FunctionResult,
 } from "@gelatonetwork/web3-functions-sdk";
 import { Task } from "chaincraft-types";
-import { checkFilters } from "./filters";
 import { prepareAction } from "./actions";
+import { checkFilters } from "./filters";
 console.log("starting on ",process.env.ENVIRONMENT)
 
 export const main = async (context: Web3FunctionContext): Promise<Web3FunctionResult> => {
@@ -30,6 +30,12 @@ export const main = async (context: Web3FunctionContext): Promise<Web3FunctionRe
       sender: task.sender!
     });
     console.log("actionData ", actionData);
+    if(actionData == true){
+      return {
+        canExec: false,
+        message: `Action executed`,
+      }; 
+    }
     if (!actionData) {
       return {
         canExec: false,
@@ -52,5 +58,5 @@ if(process.env.ENVIRONMENT !== 'local') {
   Web3Function.onRun(main);
 }
 
-export {checkFilters} from './filters'
-export {prepareAction} from './actions'
+export { prepareAction } from './actions';
+export { checkFilters } from './filters';

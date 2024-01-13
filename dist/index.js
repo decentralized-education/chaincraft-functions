@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.prepareAction = exports.checkFilters = exports.main = void 0;
+exports.checkFilters = exports.prepareAction = exports.main = void 0;
 const VERSION = "v0.0.1";
 const web3_functions_sdk_1 = require("@gelatonetwork/web3-functions-sdk");
-const filters_1 = require("./filters");
 const actions_1 = require("./actions");
+const filters_1 = require("./filters");
 console.log("starting on ", process.env.ENVIRONMENT);
 const main = async (context) => {
     console.log("VERSION ", VERSION);
@@ -25,6 +25,12 @@ const main = async (context) => {
             sender: task.sender
         });
         console.log("actionData ", actionData);
+        if (actionData == true) {
+            return {
+                canExec: false,
+                message: `Action executed`,
+            };
+        }
         if (!actionData) {
             return {
                 canExec: false,
@@ -48,7 +54,7 @@ exports.main = main;
 if (process.env.ENVIRONMENT !== 'local') {
     web3_functions_sdk_1.Web3Function.onRun(exports.main);
 }
-var filters_2 = require("./filters");
-Object.defineProperty(exports, "checkFilters", { enumerable: true, get: function () { return filters_2.checkFilters; } });
 var actions_2 = require("./actions");
 Object.defineProperty(exports, "prepareAction", { enumerable: true, get: function () { return actions_2.prepareAction; } });
+var filters_2 = require("./filters");
+Object.defineProperty(exports, "checkFilters", { enumerable: true, get: function () { return filters_2.checkFilters; } });
