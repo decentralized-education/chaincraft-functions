@@ -21,15 +21,28 @@ async function binanceTrade(action, context, options) {
             return false;
         }
         const symbol = lodash_1.default.get(action, "data.symbol");
+        const side = lodash_1.default.get(action, "data.side");
+        if (!side) {
+            console.error("[binanceTrade] no side set up");
+            return false;
+        }
+        if (!symbol) {
+            console.error("[binanceTrade] no symbol set up");
+            return false;
+        }
         const binanceClient = new binance_1.MainClient({
             api_key: binanceKey,
             api_secret: binanceSecret,
         });
         const response = await binanceClient.submitNewOrder({
             symbol,
-            side: "BUY",
+            side: side,
             type: "MARKET"
         });
+        console.log("[binanceTrade] successful trade ", response);
+        if (response.orderId) {
+            return true;
+        }
     }
     catch (e) {
         console.log("[binanceTrade] error ", e);
