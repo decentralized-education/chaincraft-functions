@@ -1278,8 +1278,8 @@ caseless@~0.12.0:
   integrity sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==
 
 chaincraft-types@decentralized-education/chaincraft-types:
-  version "1.0.27"
-  resolved "https://codeload.github.com/decentralized-education/chaincraft-types/tar.gz/57ff5b1e5bf824066ddcfd611f799bf0986987df"
+  version "1.0.30"
+  resolved "https://codeload.github.com/decentralized-education/chaincraft-types/tar.gz/d1769be1e91694495b2918ffd639f39a6027ee20"
   dependencies:
     typescript "^5.3.3"
 
