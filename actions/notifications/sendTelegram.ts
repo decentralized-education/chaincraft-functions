@@ -12,7 +12,7 @@ import _ from 'lodash'
 import moment from 'moment'
 import TelegramBot from 'node-telegram-bot-api';
 
-export async function sendTelegram(
+export async function sendTelegramMessage(
     action: Action,
     context: Web3FunctionContext,
     options?: ActionOptions
@@ -33,7 +33,7 @@ export async function sendTelegram(
         const text = _.get(action, 'data.text', `Spell is casted at ${moment().format('YYYY-MM-DD HH:mm:ss')}`)
         console.log('[sendTelegram] sendTelegram ', text)
 
-        bot.sendMessage(chatId, 'Received your message');
+        bot.sendMessage(chatId, text);
 
         return true;
     } catch (e: any) {

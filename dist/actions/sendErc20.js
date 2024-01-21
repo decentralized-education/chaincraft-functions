@@ -44,8 +44,8 @@ async function sendErc20(action, context, options) {
             }
             console.log('[sendErc20] action.value ', action.value);
             const data = [
-                action.fromAddress, // sender
-                action.toAddress, // recipient
+                action.fromAddress,
+                action.toAddress,
                 action.value, // amount
             ];
             console.log('[sendErc20] data ', data);
@@ -57,7 +57,7 @@ async function sendErc20(action, context, options) {
         console.log('[sendErc20] sending from the same address, no allowance required');
         console.log('[sendErc20] action.value ', action.value);
         const data = [
-            action.toAddress, // recipient
+            action.toAddress,
             action.value, // amount
         ];
         console.log('[sendErc20] data ', data);
