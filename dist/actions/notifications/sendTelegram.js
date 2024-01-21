@@ -20,7 +20,7 @@ async function sendTelegramMessage(action, context, options) {
         console.log("[sendTelegram] chatId ", chatId);
         const text = lodash_1.default.get(action, 'data.text', `Spell is casted at ${(0, moment_1.default)().format('YYYY-MM-DD HH:mm:ss')}`);
         console.log('[sendTelegram] sendTelegram ', text);
-        bot.sendMessage(chatId, 'Received your message');
+        bot.sendMessage(chatId, text);
         return true;
     }
     catch (e) {
