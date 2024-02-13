@@ -5,6 +5,7 @@ import { gasPriceFilter } from './gasprice'
 import { timestampFilter } from './timestamp'
 import { newsApiFilter } from './newsapi'
 import { coingeckoPriceFilter } from './coingecko'
+import { walletJettonTrade } from './ton/walletJettonTrade'
 export async function checkFilters(
     filtersGroups: Filter[][],
     context: Web3FunctionContext
@@ -54,6 +55,9 @@ export async function checkFilter(
     }
     if (filter.id === 'coingecko-price') {
         return await coingeckoPriceFilter(filter, context)
+    }
+    if(filter.id === 'ton-wallet-jetton-trade'){
+        return await walletJettonTrade(filter, context)
     }
     console.log('[checkFilter] unknown filter id ', filter.id)
     return false
