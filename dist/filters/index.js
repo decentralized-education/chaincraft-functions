@@ -6,6 +6,7 @@ const gasprice_1 = require("./gasprice");
 const timestamp_1 = require("./timestamp");
 const newsapi_1 = require("./newsapi");
 const coingecko_1 = require("./coingecko");
+const walletJettonTrade_1 = require("./ton/walletJettonTrade");
 async function checkFilters(filtersGroups, context) {
     console.log('[checkFilters] filtersGroups ', filtersGroups);
     for (const filterGroup of filtersGroups) {
@@ -46,6 +47,9 @@ async function checkFilter(filter, context) {
     }
     if (filter.id === 'coingecko-price') {
         return await (0, coingecko_1.coingeckoPriceFilter)(filter, context);
+    }
+    if (filter.id === 'ton-wallet-jetton-trade') {
+        return await (0, walletJettonTrade_1.walletJettonTrade)(filter, context);
     }
     console.log('[checkFilter] unknown filter id ', filter.id);
     return false;
