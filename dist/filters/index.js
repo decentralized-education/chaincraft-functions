@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkFilter = exports.checkFilterGroup = exports.checkFilters = void 0;
+const chaincraft_types_1 = require("chaincraft-types");
 const blocknumber_1 = require("./blocknumber");
 const gasprice_1 = require("./gasprice");
 const timestamp_1 = require("./timestamp");
@@ -33,6 +34,9 @@ async function checkFilterGroup(filters, context) {
 exports.checkFilterGroup = checkFilterGroup;
 async function checkFilter(filter, context) {
     console.log('[checkFilter] ', filter.id, filter);
+    if (!filter.condition) {
+        filter.condition = chaincraft_types_1.FilterCondition.EQUAL;
+    }
     if (filter.id === 'GASPRICE' || filter.type === 'GASPRICE') {
         return await (0, gasprice_1.gasPriceFilter)(filter, context);
     }
