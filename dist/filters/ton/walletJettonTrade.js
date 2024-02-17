@@ -49,7 +49,7 @@ const walletJettonTrade = async (filter, context) => {
             // console.log("event ",event.actions)
             for (const action of event.actions) {
                 if (action.JettonTransfer) {
-                    console.log('action ', event.timestamp);
+                    console.log('[walletJettonTrade] action ', event.timestamp);
                     pendingTrades.push({
                         side: action.JettonTransfer.senders_wallet ==
                             rawAddress.toString()

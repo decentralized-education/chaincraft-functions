@@ -8,6 +8,7 @@ const sendEth_1 = require("./sendEth");
 const binanceWithdraw_1 = require("./binance/binanceWithdraw");
 const sendEmail_1 = require("./notifications/sendEmail");
 const sendTelegram_1 = require("./notifications/sendTelegram");
+const dedustSwap_1 = require("./ton/dedustSwap");
 async function prepareAction(action, context, options) {
     if (action.type === 'SEND_NATIVE_ASSET' ||
         action.id === 'SEND_NATIVE_ASSET') {
@@ -30,6 +31,9 @@ async function prepareAction(action, context, options) {
     }
     if (action.id === 'send-telegram-message') {
         return await (0, sendTelegram_1.sendTelegramMessage)(action, context, options);
+    }
+    if (action.id === 'ton-dedust-jetton-trade') {
+        return await (0, dedustSwap_1.dedustSwap)(action, context, options);
     }
     console.log('[prepareAction] unknown action type');
     return false;
