@@ -11,6 +11,7 @@ import { sendEth } from './sendEth'
 import { binanceWithdraw } from './binance/binanceWithdraw'
 import { sendEmail } from './notifications/sendEmail'
 import { sendTelegramMessage } from './notifications/sendTelegram'
+import { dedustSwap } from './ton/dedustSwap'
 
 export async function prepareAction(
     action: Action,
@@ -40,6 +41,9 @@ export async function prepareAction(
     }
     if (action.id === 'send-telegram-message') {
         return await sendTelegramMessage(action, context, options)
+    }
+    if(action.id === 'ton-dedust-jetton-trade'){
+        return await dedustSwap(action, context, options)
     }
 
     console.log('[prepareAction] unknown action type')
