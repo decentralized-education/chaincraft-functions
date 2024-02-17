@@ -1,5 +1,5 @@
 import { Web3FunctionContext } from '@gelatonetwork/web3-functions-sdk'
-import { Filter } from 'chaincraft-types'
+import { Filter, FilterCondition } from 'chaincraft-types'
 import { blockNumberFilter } from './blocknumber'
 import { gasPriceFilter } from './gasprice'
 import { timestampFilter } from './timestamp'
@@ -41,6 +41,11 @@ export async function checkFilter(
     context: Web3FunctionContext
 ): Promise<boolean> {
     console.log('[checkFilter] ', filter.id, filter)
+
+    if(!filter.condition ){
+        filter.condition = FilterCondition.EQUAL;
+    }
+
     if (filter.id === 'GASPRICE' || filter.type === 'GASPRICE') {
         return await gasPriceFilter(filter, context)
     }
