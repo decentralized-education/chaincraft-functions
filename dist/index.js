@@ -15,7 +15,7 @@ const main = async (context) => {
         const task = JSON.parse("" + taskArgument);
         console.log("task ", typeof task, ("" + task).slice(0, 5));
         const filtersResult = await (0, filters_1.checkFilters)(task.filters, context);
-        if (filtersResult == false) {
+        if (filtersResult.success == false) {
             return {
                 canExec: false,
                 message: `Filters not met`,

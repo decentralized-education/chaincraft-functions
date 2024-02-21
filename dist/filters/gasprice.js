@@ -12,15 +12,23 @@ const gasPriceFilter = async (filter, context) => {
     console.log('gasPriceGwei ', gasPriceGwei.toBigInt());
     console.log('filterValueGwei ', filterValueGwei.toBigInt());
     if (filter.condition === 'GREATER') {
-        return gasPriceGwei.gte(filterValueGwei);
+        return {
+            success: gasPriceGwei.gte(filterValueGwei)
+        };
     }
     if (filter.condition === 'LESS') {
         console.log('is less ', gasPriceGwei.lte(filterValueGwei), gasPriceGwei.toBigInt());
-        return gasPriceGwei.lte(filterValueGwei);
+        return {
+            success: gasPriceGwei.lte(filterValueGwei)
+        };
     }
     if (filter.condition === 'EQUAL') {
-        return gasPriceGwei.eq(filterValueGwei);
+        return {
+            success: gasPriceGwei.eq(filterValueGwei)
+        };
     }
-    return false;
+    return {
+        success: false,
+    };
 };
 exports.gasPriceFilter = gasPriceFilter;

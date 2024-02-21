@@ -1,6 +1,4 @@
-import {
-    Web3FunctionContext
-} from '@gelatonetwork/web3-functions-sdk'
+import { Web3FunctionContext } from '@gelatonetwork/web3-functions-sdk'
 import { Filter } from 'chaincraft-types'
 
 export const blockNumberFilter = async (
@@ -14,17 +12,23 @@ export const blockNumberFilter = async (
         console.log('getBlockNumberFilter: ', blockNumber)
 
         if (filter.condition === 'GREATER') {
-            return blockNumber > +filter.value!
+            return {
+                success: blockNumber > +filter.value!,
+            }
         }
         if (filter.condition === 'LESS') {
-            return blockNumber < +filter.value!
+            return {
+                success: blockNumber < +filter.value!,
+            }
         }
         if (filter.condition === 'EQUAL') {
-            return blockNumber === +filter.value!
+            return {
+                success: blockNumber === +filter.value!,
+            }
         }
     } catch (e) {
         console.log('[filters] getBlockNumberFilter error ', e)
     }
 
-    return false
+    return { success: false }
 }

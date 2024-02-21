@@ -13,16 +13,16 @@ export const newsApiFilter = async (
         const query = filter.value
         const date = moment().add(-1, 'days').format('YYYY-MM-DD')
         const apiKey = await context.secrets.get('news-api-key')
-        console.log("[filters] newsApiFilter query ",query)
-        const url = `https://newsapi.org/v2/everything?q=${query}&from=${date}&sortBy=popularity&apiKey=${apiKey}`;
+        console.log('[filters] newsApiFilter query ', query)
+        const url = `https://newsapi.org/v2/everything?q=${query}&from=${date}&sortBy=popularity&apiKey=${apiKey}`
         const { data } = await axios.get(url)
         console.log('[filters] newsApiFilter response ', data)
         if (data.status == 'ok' && data.totalResults > 0) {
-            return true
+            return { success: true }
         }
     } catch (e) {
         console.log('[filters] newsApiFilter error ', e)
     }
 
-    return false
+    return { success: false }
 }

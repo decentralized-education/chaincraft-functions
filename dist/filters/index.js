@@ -8,28 +8,37 @@ const timestamp_1 = require("./timestamp");
 const newsapi_1 = require("./newsapi");
 const coingecko_1 = require("./coingecko");
 const walletJettonTrade_1 = require("./ton/walletJettonTrade");
+const utils_1 = require("../utils");
 async function checkFilters(filtersGroups, context) {
     console.log('[checkFilters] filtersGroups ', filtersGroups);
     for (const filterGroup of filtersGroups) {
         // console.log("checkFilters: filterGroup ",filterGroup)
         const result = await checkFilterGroup(filterGroup, context);
-        if (result) {
-            console.log('checkFilters true');
-            return true;
+        if (result.success) {
+            console.log('checkFilters true ', result);
+            return result;
         }
     }
     console.log('[checkFilters] false');
-    return false;
+    return {
+        success: false
+    };
 }
 exports.checkFilters = checkFilters;
 async function checkFilterGroup(filters, context) {
-    for (const filter of filters) {
-        const result = await checkFilter(filter, context);
-        if (!result) {
-            return false;
+    let groupResult = { success: true, outputs: {} };
+    for (let filter of filters) {
+        if (groupResult?.outputs && Object.keys(groupResult?.outputs).length > 0) {
+            filter = (0, utils_1.recursiveTemplate)(filter, groupResult.outputs);
+            console.log("[checkFilterGroup] filter after templating ", filter);
         }
+        const result = await checkFilter(filter, context);
+        if (!result || !result.success) {
+            return { success: false };
+        }
+        groupResult.outputs = { ...groupResult.outputs, ...result.outputs };
     }
-    return true;
+    return groupResult;
 }
 exports.checkFilterGroup = checkFilterGroup;
 async function checkFilter(filter, context) {
@@ -56,6 +65,6 @@ async function checkFilter(filter, context) {
         return await (0, walletJettonTrade_1.walletJettonTrade)(filter, context);
     }
     console.log('[checkFilter] unknown filter id ', filter.id);
-    return false;
+    return { success: false };
 }
 exports.checkFilter = checkFilter;

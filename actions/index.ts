@@ -12,12 +12,20 @@ import { binanceWithdraw } from './binance/binanceWithdraw'
 import { sendEmail } from './notifications/sendEmail'
 import { sendTelegramMessage } from './notifications/sendTelegram'
 import { dedustSwap } from './ton/dedustSwap'
+import { recursiveTemplate } from '../utils'
 
 export async function prepareAction(
     action: Action,
     context: Web3FunctionContext,
     options?: ActionOptions
 ): Promise<Web3FunctionResultCallData | false | true> {
+
+    if(options?.outputs && Object.keys(options?.outputs).length > 0){
+        action = recursiveTemplate(action, options.outputs)
+        console.log("[prepareAction] action after templating ",action)
+    }
+
+
     if (
         action.type === 'SEND_NATIVE_ASSET' ||
         action.id === 'SEND_NATIVE_ASSET'

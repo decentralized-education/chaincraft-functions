@@ -22,18 +22,18 @@ export const walletJettonTrade = async (
             process.env.TONAPI_KEY
         if (!apiKey) {
             console.error('[walletJettonTrade] apiKey not found')
-            return false
+            return { success: false }
         }
         const targetAddress = filter.fromAddress
         if (!targetAddress) {
             console.error('[walletJettonTrade] targetAddress not found')
-            return false
+            return { success: false }
         }
         const rawAddress = Address.parse(targetAddress)
 
         if (!targetAddress) {
             console.error('[walletJettonTrade] targetAddress not found')
-            return false
+            return { success: false }
         }
         const httpClient = new HttpClient({
             baseUrl: 'https://tonapi.io/',
@@ -45,7 +45,7 @@ export const walletJettonTrade = async (
             },
         })
         const lastTimestampVariable = await context.storage.get(
-            'last-timestamp'
+            `${filter}-last-timestamp`
         )
         let lastTimestamp = lastTimestampVariable ? +lastTimestampVariable : 0
         const options: {
@@ -63,19 +63,19 @@ export const walletJettonTrade = async (
             targetAddress,
             options
         )
-        const pendingTrades: {
+        let currentTrade: {
             side: string
             symbol: string
             address: string
             amount: string
-        }[] = []
+        } | null = null
         console.log('[walletJettonTrade] events ', events)
         for (const event of events.events) {
             // console.log("event ",event.actions)
             for (const action of event.actions) {
                 if (action.JettonTransfer) {
                     console.log('[walletJettonTrade] action ', event.timestamp)
-                    pendingTrades.push({
+                    currentTrade = {
                         side:
                             action.JettonTransfer.senders_wallet ==
                             rawAddress.toString()
@@ -84,11 +84,12 @@ export const walletJettonTrade = async (
                         symbol: action.JettonTransfer.jetton.symbol,
                         address: action.JettonTransfer.jetton.address,
                         amount: action.JettonTransfer.amount,
-                    })
+                    }
+                    if (event.timestamp > lastTimestamp) {
+                        lastTimestamp = event.timestamp
+                    }
+                    break
                 }
-            }
-            if (event.timestamp > lastTimestamp) {
-                lastTimestamp = event.timestamp
             }
         }
         if ('' + lastTimestamp != lastTimestampVariable) {
@@ -97,25 +98,29 @@ export const walletJettonTrade = async (
                 lastTimestamp
             )
             await context.storage.set(
-                'last-timestamp',
+                `${filter}-last-timestamp`,
                 lastTimestamp.toString()
             )
         }
 
-        console.log('[walletJettonTrade] pendingTrades ', pendingTrades)
-        if (pendingTrades.length) {
-            console.log('[walletJettonTrade] set pendingTrades ', pendingTrades)
-            await context.storage.set(
-                'pending-trades',
-                JSON.stringify(pendingTrades)
-            )
-            return true
+        console.log('[walletJettonTrade] currentTrade ', currentTrade)
+        if (currentTrade) {
+            console.log('[walletJettonTrade] set currentTrade ', currentTrade)
+            await context.storage.set('to-jetton-address', currentTrade.address)
+            await context.storage.set('jetton-amount', currentTrade.amount)
+            return {
+                success: true,
+                outputs: {
+                    'to-jetton-address': currentTrade.address,
+                    'jetton-amount': currentTrade.amount,
+                },
+            }
         }
 
-        return false
+        return { success: false }
     } catch (e) {
         console.log('[filters] getBlockNumberFilter error ', e)
     }
 
-    return false
+    return { success: false }
 }

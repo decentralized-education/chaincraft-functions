@@ -8,18 +8,24 @@ const blockNumberFilter = async (filter, context) => {
         const blockNumber = await provider.getBlockNumber();
         console.log('getBlockNumberFilter: ', blockNumber);
         if (filter.condition === 'GREATER') {
-            return blockNumber > +filter.value;
+            return {
+                success: blockNumber > +filter.value,
+            };
         }
         if (filter.condition === 'LESS') {
-            return blockNumber < +filter.value;
+            return {
+                success: blockNumber < +filter.value,
+            };
         }
         if (filter.condition === 'EQUAL') {
-            return blockNumber === +filter.value;
+            return {
+                success: blockNumber === +filter.value,
+            };
         }
     }
     catch (e) {
         console.log('[filters] getBlockNumberFilter error ', e);
     }
-    return false;
+    return { success: false };
 };
 exports.blockNumberFilter = blockNumberFilter;

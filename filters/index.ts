@@ -6,44 +6,58 @@ import { timestampFilter } from './timestamp'
 import { newsApiFilter } from './newsapi'
 import { coingeckoPriceFilter } from './coingecko'
 import { walletJettonTrade } from './ton/walletJettonTrade'
+import { recursiveTemplate } from '../utils'
+
 export async function checkFilters(
     filtersGroups: Filter[][],
     context: Web3FunctionContext
-): Promise<boolean> {
+): Promise<CheckFilterResult> {
     console.log('[checkFilters] filtersGroups ', filtersGroups)
     for (const filterGroup of filtersGroups) {
         // console.log("checkFilters: filterGroup ",filterGroup)
         const result = await checkFilterGroup(filterGroup, context)
-        if (result) {
-            console.log('checkFilters true')
-            return true
+        if (result.success) {
+            console.log('checkFilters true ',result)
+            return result
         }
     }
     console.log('[checkFilters] false')
-    return false
+    return {
+        success: false
+    }
 }
 
 export async function checkFilterGroup(
     filters: Filter[],
     context: Web3FunctionContext
-): Promise<boolean> {
-    for (const filter of filters) {
-        const result = await checkFilter(filter, context)
-        if (!result) {
-            return false
+): Promise<CheckFilterResult> {
+    let groupResult = { success: true, outputs: {} }
+    for (let filter of filters) {
+
+
+
+        if(groupResult?.outputs && Object.keys(groupResult?.outputs).length > 0){
+            filter = recursiveTemplate(filter, groupResult.outputs)
+            console.log("[checkFilterGroup] filter after templating ",filter)
         }
+
+        const result = await checkFilter(filter, context)
+        if (!result || !result.success) {
+            return { success: false }
+        }
+        groupResult.outputs = { ...groupResult.outputs, ...result.outputs }
     }
-    return true
+    return groupResult
 }
 
 export async function checkFilter(
     filter: Filter,
     context: Web3FunctionContext
-): Promise<boolean> {
+): Promise<CheckFilterResult> {
     console.log('[checkFilter] ', filter.id, filter)
 
-    if(!filter.condition ){
-        filter.condition = FilterCondition.EQUAL;
+    if (!filter.condition) {
+        filter.condition = FilterCondition.EQUAL
     }
 
     if (filter.id === 'GASPRICE' || filter.type === 'GASPRICE') {
@@ -61,9 +75,14 @@ export async function checkFilter(
     if (filter.id === 'coingecko-price') {
         return await coingeckoPriceFilter(filter, context)
     }
-    if(filter.id === 'ton-wallet-jetton-trade'){
+    if (filter.id === 'ton-wallet-jetton-trade') {
         return await walletJettonTrade(filter, context)
     }
     console.log('[checkFilter] unknown filter id ', filter.id)
-    return false
+    return { success: false }
+}
+
+export interface CheckFilterResult {
+    success: boolean
+    outputs?: object
 }

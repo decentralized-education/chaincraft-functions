@@ -11,17 +11,17 @@ const walletJettonTrade = async (filter, context) => {
             process.env.TONAPI_KEY;
         if (!apiKey) {
             console.error('[walletJettonTrade] apiKey not found');
-            return false;
+            return { success: false };
         }
         const targetAddress = filter.fromAddress;
         if (!targetAddress) {
             console.error('[walletJettonTrade] targetAddress not found');
-            return false;
+            return { success: false };
         }
         const rawAddress = ton_1.Address.parse(targetAddress);
         if (!targetAddress) {
             console.error('[walletJettonTrade] targetAddress not found');
-            return false;
+            return { success: false };
         }
         const httpClient = new tonapi_sdk_js_1.HttpClient({
             baseUrl: 'https://tonapi.io/',
@@ -32,7 +32,7 @@ const walletJettonTrade = async (filter, context) => {
                 },
             },
         });
-        const lastTimestampVariable = await context.storage.get('last-timestamp');
+        const lastTimestampVariable = await context.storage.get(`${filter}-last-timestamp`);
         let lastTimestamp = lastTimestampVariable ? +lastTimestampVariable : 0;
         const options = {
             limit: 20,
@@ -43,14 +43,14 @@ const walletJettonTrade = async (filter, context) => {
         console.log('[walletJettonTrade] options ', options);
         const client = new tonapi_sdk_js_1.Api(httpClient);
         const events = await client.accounts.getAccountEvents(targetAddress, options);
-        const pendingTrades = [];
+        let currentTrade = null;
         console.log('[walletJettonTrade] events ', events);
         for (const event of events.events) {
             // console.log("event ",event.actions)
             for (const action of event.actions) {
                 if (action.JettonTransfer) {
                     console.log('[walletJettonTrade] action ', event.timestamp);
-                    pendingTrades.push({
+                    currentTrade = {
                         side: action.JettonTransfer.senders_wallet ==
                             rawAddress.toString()
                             ? 'SELL'
@@ -58,28 +58,36 @@ const walletJettonTrade = async (filter, context) => {
                         symbol: action.JettonTransfer.jetton.symbol,
                         address: action.JettonTransfer.jetton.address,
                         amount: action.JettonTransfer.amount,
-                    });
+                    };
+                    if (event.timestamp > lastTimestamp) {
+                        lastTimestamp = event.timestamp;
+                    }
+                    break;
                 }
-            }
-            if (event.timestamp > lastTimestamp) {
-                lastTimestamp = event.timestamp;
             }
         }
         if ('' + lastTimestamp != lastTimestampVariable) {
             console.log('[walletJettonTrade] settting new lastTimestamp ', lastTimestamp);
-            await context.storage.set('last-timestamp', lastTimestamp.toString());
+            await context.storage.set(`${filter}-last-timestamp`, lastTimestamp.toString());
         }
-        console.log('[walletJettonTrade] pendingTrades ', pendingTrades);
-        if (pendingTrades.length) {
-            console.log('[walletJettonTrade] set pendingTrades ', pendingTrades);
-            await context.storage.set('pending-trades', JSON.stringify(pendingTrades));
-            return true;
+        console.log('[walletJettonTrade] currentTrade ', currentTrade);
+        if (currentTrade) {
+            console.log('[walletJettonTrade] set currentTrade ', currentTrade);
+            await context.storage.set('to-jetton-address', currentTrade.address);
+            await context.storage.set('jetton-amount', currentTrade.amount);
+            return {
+                success: true,
+                outputs: {
+                    'to-jetton-address': currentTrade.address,
+                    'jetton-amount': currentTrade.amount,
+                },
+            };
         }
-        return false;
+        return { success: false };
     }
     catch (e) {
         console.log('[filters] getBlockNumberFilter error ', e);
     }
-    return false;
+    return { success: false };
 };
 exports.walletJettonTrade = walletJettonTrade;

@@ -17,17 +17,17 @@ export const timestampFilter = async (
         console.log('[getTimestampFilter] timestamp=', timestamp)
 
         if (filter.condition === 'GREATER') {
-            return timestamp > +filter.value!
+            return {success:timestamp > +filter.value!}
         }
         if (filter.condition === 'LESS') {
-            return timestamp < +filter.value!
+            return {success:timestamp < +filter.value!}
         }
         if (filter.condition === 'EQUAL') {
-            return timestamp === +filter.value!
+            return {success:timestamp === +filter.value!}
         }
     } catch (e) {
         console.log('[filters] getTimestampFilter error ', e)
     }
 
-    return false
+    return {success:false}
 }

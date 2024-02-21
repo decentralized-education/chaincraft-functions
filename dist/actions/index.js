@@ -9,7 +9,12 @@ const binanceWithdraw_1 = require("./binance/binanceWithdraw");
 const sendEmail_1 = require("./notifications/sendEmail");
 const sendTelegram_1 = require("./notifications/sendTelegram");
 const dedustSwap_1 = require("./ton/dedustSwap");
+const utils_1 = require("../utils");
 async function prepareAction(action, context, options) {
+    if (options?.outputs && Object.keys(options?.outputs).length > 0) {
+        action = (0, utils_1.recursiveTemplate)(action, options.outputs);
+        console.log("[prepareAction] action after templating ", action);
+    }
     if (action.type === 'SEND_NATIVE_ASSET' ||
         action.id === 'SEND_NATIVE_ASSET') {
         return await (0, sendEth_1.sendEth)(action, context, options);

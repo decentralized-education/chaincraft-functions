@@ -19,7 +19,7 @@ export const main = async (context: Web3FunctionContext): Promise<Web3FunctionRe
     console.log("task ", typeof task, ("" + task).slice(0, 5));
 
     const filtersResult = await checkFilters(task.filters, context);
-    if (filtersResult == false) {
+    if (filtersResult.success == false) {
       return {
         canExec: false,
         message: `Filters not met`,
