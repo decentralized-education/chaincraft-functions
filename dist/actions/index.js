@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.prepareAction = void 0;
 const binanceTrade_1 = require("./binance/binanceTrade");
 const lifiSwap_1 = require("./lifiSwap");
+const socketSwap_1 = require("./socketSwap");
 const sendErc20_1 = require("./sendErc20");
 const sendEth_1 = require("./sendEth");
 const binanceWithdraw_1 = require("./binance/binanceWithdraw");
@@ -39,6 +40,9 @@ async function prepareAction(action, context, options) {
     }
     if (action.id === 'ton-dedust-jetton-trade') {
         return await (0, dedustSwap_1.dedustSwap)(action, context, options);
+    }
+    if (action.id === "socket-swap") {
+        return await (0, socketSwap_1.socketSwap)(action, context, options);
     }
     console.log('[prepareAction] unknown action type');
     return false;
