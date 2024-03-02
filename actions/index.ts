@@ -6,6 +6,7 @@ import { Action } from 'chaincraft-types'
 import { ActionOptions } from '../types'
 import { binanceTrade } from './binance/binanceTrade'
 import { lifiSwap } from './lifiSwap'
+import { supplyAave } from "./supplyAave";
 import { sendErc20 } from './sendErc20'
 import { sendEth } from './sendEth'
 import { binanceWithdraw } from './binance/binanceWithdraw'
@@ -53,6 +54,9 @@ export async function prepareAction(
     if(action.id === 'ton-dedust-jetton-trade'){
         return await dedustSwap(action, context, options)
     }
+     if (action.id === "supply-aave") {
+       return await supplyAave(action, context, options);
+     }
 
     console.log('[prepareAction] unknown action type')
     return false
