@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkFilter = exports.checkFilterGroup = exports.checkFilters = void 0;
-// const marketavailable_1 = require("./marketavailable");
 const chaincraft_types_1 = require("chaincraft-types");
 const blocknumber_1 = require("./blocknumber");
 const gasprice_1 = require("./gasprice");
@@ -66,7 +65,7 @@ async function checkFilter(filter, context) {
         return await (0, walletJettonTrade_1.walletJettonTrade)(filter, context);
     }
     // if (filter.id === "market-available") {
-    //     return await (0, marketavailable_1.marketAvailableFilter)(filter, context);
+    //   return await marketAvailableFilter(filter, context);
     // }
     console.log("[checkFilter] unknown filter id ", filter.id);
     return { success: false };
