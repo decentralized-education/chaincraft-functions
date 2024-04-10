@@ -8,11 +8,11 @@ const swap = async (context: Web3FunctionContext, action: Action, estimation?: E
         if (!_estimation) {
             return false
         }
-        const pEst = JSON.parse(_estimation)
+        const parsedEstimation = JSON.parse(_estimation)
         return {
-            to: pEst.tx.to,
-            data: pEst.tx.data,
-            value: pEst.tx.value,
+            to: parsedEstimation.tx.to,
+            data: parsedEstimation.tx.data,
+            value: parsedEstimation.tx.value,
         } as Web3FunctionResultCallData
     }
 
