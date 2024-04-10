@@ -1,4 +1,4 @@
-import { marketAvailableFilter } from "./marketavailable";
+// import { marketAvailableFilter } from "./marketavailable";
 import { Web3FunctionContext } from "@gelatonetwork/web3-functions-sdk";
 import { Filter, FilterCondition } from "chaincraft-types";
 import { blockNumberFilter } from "./blocknumber";
@@ -76,9 +76,9 @@ export async function checkFilter(
   if (filter.id === "ton-wallet-jetton-trade") {
     return await walletJettonTrade(filter, context);
   }
-  if (filter.id === "market-available") {
-    return await marketAvailableFilter(filter, context);
-  }
+  // if (filter.id === "market-available") {
+  //   return await marketAvailableFilter(filter, context);
+  // }
   console.log("[checkFilter] unknown filter id ", filter.id);
   return { success: false };
 }

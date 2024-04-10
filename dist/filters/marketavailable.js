@@ -1,22 +1,24 @@
-// "use strict";
-// Object.defineProperty(exports, "__esModule", { value: true });
-// exports.marketAvailableFilter = void 0;
-// const binance_1 = require("binance");
-// const chaincraft_types_1 = require("chaincraft-types");
-// const marketAvailableFilter = async (filter, context) => {
-//     try {
-//         console.log("[filters] marketAvailableFilter ", filter);
-//         if (filter.condition == chaincraft_types_1.FilterCondition.EQUAL) {
-//             const { currency } = filter.data;
-//             const client = new binance_1.MainClient();
-//             const exchangeInfo = await client.getExchangeInfo();
-//             const isMarketAvailable = exchangeInfo.symbols.some((symbol) => symbol.symbol === `${currency}USDT`);
-//             return { success: iasMarketAvailable };
-//         }
+"use strict";
+// import { MainClient } from "binance";
+// import { Web3FunctionContext } from "@gelatonetwork/web3-functions-sdk";
+// import { Filter, FilterCondition } from "chaincraft-types";
+// export const marketAvailableFilter = async (
+//   filter: Filter,
+//   context: Web3FunctionContext
+// ) => {
+//   try {
+//     console.log("[filters] marketAvailableFilter ", filter);
+//     if (filter.condition == FilterCondition.EQUAL) {
+//       const { currency } = filter.data as any;
+//       const client = new MainClient();
+//       const exchangeInfo = await client.getExchangeInfo();
+//       const isMarketAvailable = exchangeInfo.symbols.some(
+//         (symbol) => symbol.symbol === `${currency}USDT`
+//       );
+//       return { success: isMarketAvailable };
 //     }
-//     catch (e) {
-//         console.log("[filters] marketAvailableFilter error ", e);
-//     }
-//     return { success: false };
+//   } catch (e) {
+//     console.log("[filters] marketAvailableFilter error ", e);
+//   }
+//   return { success: false };
 // };
-// exports.marketAvailableFilter = marketAvailableFilter;
