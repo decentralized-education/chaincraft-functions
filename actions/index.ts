@@ -1,3 +1,4 @@
+import { jupSwap } from './jupSwap';
 import { Web3FunctionContext, Web3FunctionResultCallData } from '@gelatonetwork/web3-functions-sdk'
 import { Action } from 'chaincraft-types'
 import { ActionOptions } from '../types'
@@ -53,6 +54,10 @@ export async function prepareAction(
     if (action.id === 'socket-swap') {
         return await socketSwap(action, context, options)
     }
+
+     if (action.id === 'jup-swap') {
+         return await jupSwap(action, context, options)
+     }
 
     console.log('[prepareAction] unknown action type')
     return false
