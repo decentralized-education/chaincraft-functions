@@ -4,7 +4,7 @@ exports.prepareAction = void 0;
 const jupSwap_1 = require("./jupSwap");
 // import { binanceTrade } from './binance/binanceTrade'
 const lifiSwap_1 = require("./lifiSwap");
-const supplyAave_1 = require("./supplyAave");
+// import { supplyAave } from './supplyAave'
 const socketSwap_1 = require("./socketSwap");
 const sendErc20_1 = require("./sendErc20");
 const sendEth_1 = require("./sendEth");
@@ -42,9 +42,9 @@ async function prepareAction(action, context, options) {
     if (action.id === 'ton-dedust-jetton-trade') {
         return await (0, dedustSwap_1.dedustSwap)(action, context, options);
     }
-    if (action.id === 'supply-aave') {
-        return await (0, supplyAave_1.supplyAave)(action, context, options);
-    }
+    // if (action.id === 'supply-aave') {
+    //     return await supplyAave(action, context, options)
+    // }
     if (action.id === 'socket-swap') {
         return await (0, socketSwap_1.socketSwap)(action, context, options);
     }
