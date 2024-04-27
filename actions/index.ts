@@ -3,7 +3,7 @@ import { Action, Web3FunctionContext, Web3FunctionResultCallData } from 'chaincr
 import { ActionOptions } from '../types'
 // import { binanceTrade } from './binance/binanceTrade'
 import { lifiSwap } from './lifiSwap'
-import { supplyAave } from './supplyAave'
+// import { supplyAave } from './supplyAave'
 import { socketSwap } from './socketSwap'
 import { sendErc20 } from './sendErc20'
 import { sendEth } from './sendEth'
@@ -47,9 +47,9 @@ export async function prepareAction(
     if (action.id === 'ton-dedust-jetton-trade') {
         return await dedustSwap(action, context, options)
     }
-    if (action.id === 'supply-aave') {
-        return await supplyAave(action, context, options)
-    }
+    // if (action.id === 'supply-aave') {
+    //     return await supplyAave(action, context, options)
+    // }
     if (action.id === 'socket-swap') {
         return await socketSwap(action, context, options)
     }
