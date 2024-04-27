@@ -4,7 +4,7 @@ exports.checkFilters = exports.prepareAction = exports.main = void 0;
 const VERSION = "v0.0.1";
 const actions_1 = require("./actions");
 const filters_1 = require("./filters");
-console.log("starting on ", process.env.ENVIRONMENT);
+console.log("starting functions on ", process.env.ENVIRONMENT);
 const main = async (context) => {
     console.log("VERSION ", VERSION);
     const { userArgs, storage, multiChainProvider, gelatoArgs } = context;
