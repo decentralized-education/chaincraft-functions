@@ -1,6 +1,5 @@
 import { jupSwap } from './jupSwap';
-import { Web3FunctionContext, Web3FunctionResultCallData } from '@gelatonetwork/web3-functions-sdk'
-import { Action } from 'chaincraft-types'
+import { Action, Web3FunctionContext, Web3FunctionResultCallData } from 'chaincraft-types'
 import { ActionOptions } from '../types'
 // import { binanceTrade } from './binance/binanceTrade'
 import { lifiSwap } from './lifiSwap'

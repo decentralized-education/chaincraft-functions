@@ -1,9 +1,5 @@
-import {
-  Web3FunctionContext,
-  Web3FunctionResultCallData,
-} from "@gelatonetwork/web3-functions-sdk";
 import axios from "axios";
-import { Action } from "chaincraft-types";
+import { Action, Web3FunctionContext, Web3FunctionResultCallData } from "chaincraft-types";
 import { ActionOptions } from "../types";
 
 const API_KEY = "72a5b4b0-e727-48be-8aa1-5da9d62fe635"; // SOCKET PUBLIC API KEY

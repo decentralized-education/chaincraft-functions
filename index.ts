@@ -1,10 +1,5 @@
 const VERSION = "v0.0.1";
-import {
-  Web3Function,
-  Web3FunctionContext,
-  Web3FunctionResult,
-} from "@gelatonetwork/web3-functions-sdk";
-import { Task } from "chaincraft-types";
+import { Task, Web3FunctionContext, Web3FunctionResult } from "chaincraft-types";
 import { prepareAction } from "./actions";
 import { checkFilters } from "./filters";
 console.log("starting on ",process.env.ENVIRONMENT)
@@ -55,7 +50,7 @@ export const main = async (context: Web3FunctionContext): Promise<Web3FunctionRe
   }
 };
 if(process.env.ENVIRONMENT !== 'local') {
-  Web3Function.onRun(main);
+  // Web3Function.onRun(main);
 }
 
 export { prepareAction } from './actions';

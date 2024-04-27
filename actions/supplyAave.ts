@@ -1,9 +1,4 @@
-import {
-  Web3Function,
-  Web3FunctionContext,
-  Web3FunctionResultCallData,
-} from "@gelatonetwork/web3-functions-sdk";
-import { Action } from "chaincraft-types";
+import { Action, Web3FunctionContext, Web3FunctionResultCallData } from "chaincraft-types";
 import { ethers } from "ethers";
 import { ActionOptions } from "../types";
 import { Pool } from "@aave/contract-helpers";

@@ -1,9 +1,4 @@
-import {
-    Web3Function,
-    Web3FunctionContext,
-    Web3FunctionResultCallData,
-} from '@gelatonetwork/web3-functions-sdk'
-import { Action, Filter } from 'chaincraft-types'
+import { Action, Filter, Web3FunctionContext, Web3FunctionResultCallData } from 'chaincraft-types'
 import { Contract, ethers } from 'ethers'
 import { ActionOptions } from '../../types'
 import axios from 'axios'

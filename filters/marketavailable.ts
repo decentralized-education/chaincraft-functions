@@ -1,6 +1,5 @@
 import { MainClient } from "binance";
-import { Web3FunctionContext } from "@gelatonetwork/web3-functions-sdk";
-import { Filter, FilterCondition } from "chaincraft-types";
+import { Filter, FilterCondition, Web3FunctionContext } from "chaincraft-types";
 
 export const marketAvailableFilter = async (
   filter: Filter,

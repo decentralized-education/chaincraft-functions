@@ -1,5 +1,4 @@
-import { Web3FunctionContext } from '@gelatonetwork/web3-functions-sdk'
-import { Filter, FilterCondition } from 'chaincraft-types'
+import { Filter, FilterCondition, Web3FunctionContext } from 'chaincraft-types'
 import axios from 'axios'
 import moment from 'moment'
 import Decimal from 'decimal.js'

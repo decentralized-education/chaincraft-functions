@@ -1,9 +1,5 @@
-import {
-    Web3Function,
-    Web3FunctionContext,
-    Web3FunctionResultCallData,
-} from '@gelatonetwork/web3-functions-sdk'
-import { Action, Filter } from 'chaincraft-types'
+
+import { Action, Filter, Web3FunctionContext, Web3FunctionResultCallData } from 'chaincraft-types'
 import { Contract, ethers } from 'ethers'
 import ERC20 from '../abi/ERC20'
 import { ActionOptions } from '../types'

@@ -1,6 +1,5 @@
 import { marketAvailableFilter } from "./marketavailable";
-import { Web3FunctionContext } from "@gelatonetwork/web3-functions-sdk";
-import { Filter, FilterCondition } from "chaincraft-types";
+import { Filter, FilterCondition, Web3FunctionContext } from "chaincraft-types";
 import { blockNumberFilter } from "./blocknumber";
 import { gasPriceFilter } from "./gasprice";
 import { timestampFilter } from "./timestamp";

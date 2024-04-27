@@ -1,7 +1,4 @@
-import {
-    Web3FunctionContext
-} from '@gelatonetwork/web3-functions-sdk'
-import { Filter } from 'chaincraft-types'
+import { Filter, Web3FunctionContext } from 'chaincraft-types'
 import { BigNumber } from 'ethers'
 
 export const gasPriceFilter = async (

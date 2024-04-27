@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkFilters = exports.prepareAction = exports.main = void 0;
 const VERSION = "v0.0.1";
-const web3_functions_sdk_1 = require("@gelatonetwork/web3-functions-sdk");
 const actions_1 = require("./actions");
 const filters_1 = require("./filters");
 console.log("starting on ", process.env.ENVIRONMENT);
@@ -52,7 +51,7 @@ const main = async (context) => {
 };
 exports.main = main;
 if (process.env.ENVIRONMENT !== 'local') {
-    web3_functions_sdk_1.Web3Function.onRun(exports.main);
+    // Web3Function.onRun(main);
 }
 var actions_2 = require("./actions");
 Object.defineProperty(exports, "prepareAction", { enumerable: true, get: function () { return actions_2.prepareAction; } });
