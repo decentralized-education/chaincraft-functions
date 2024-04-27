@@ -2,7 +2,7 @@ const VERSION = "v0.0.1";
 import { Task, Web3FunctionContext, Web3FunctionResult } from "chaincraft-types";
 import { prepareAction } from "./actions";
 import { checkFilters } from "./filters";
-console.log("starting on ",process.env.ENVIRONMENT)
+console.log("starting functions on ",process.env.ENVIRONMENT)
 
 export const main = async (context: Web3FunctionContext): Promise<Web3FunctionResult> => {
   console.log("VERSION ", VERSION);
